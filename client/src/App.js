@@ -8,6 +8,7 @@ function App() {
   const [countryName, setCountryName] = useState('');
   const [cityName, setCityName] = useState('');
   const [date, setDate] = useState('');
+  const [newCountryName, setNewCountryName] = useState('');
   const [countryList, setCountryList] = useState([]);
 
 
@@ -25,6 +26,13 @@ function App() {
       date: date,
     });
   };
+
+  const updateCountry = (id) => {
+    axios.put('http://localhost:3001/update', {
+      id: id,
+      newCountryName: newCountryName,
+    })
+  }
 
   return (
     <div className="App">
@@ -73,22 +81,42 @@ function App() {
       <div className="list-wrp">
 
         <h1 className="list-title text-primary">Countries List</h1>
+        <div className="divider"></div>
 
         {countryList.map((value, key) => {
           return (
-            <div class="container item-wrp">
-              <div class="row">
-                <div class="col">
-                  {value.countryName}
-                </div>
-                <div class="col">
-                  {value.cityName}
-                </div>
-                <div class="col">
-                  {value.visitedDate.slice(0, 10)}
+            <>
+              <div className="container item-wrp">
+                <div className="row">
+                  <div className="col">
+                    <p>{value.countryName}</p>
+                  </div>
+                  <div className="col">
+                    <p>{value.cityName}</p>
+                  </div>
+                  <div className="col">
+                    <p>{value.visitedDate.slice(0, 10)}</p>
+                  </div>
+                  <div className="col">
+                    <input type="text"
+                      className="form-control new-input"
+                      placeholder="Change country"
+                      onChange={(event) => {
+                        setNewCountryName(event.target.value)
+                      }}
+                    >
+                    </input>
+                    <button type="button" className="btn btn-list btn-outline-primary" onClick={() => updateCountry(value._id)}>Update</button>
+                  </div>
+                  <div className="col">
+
+                    <button type="button" className="btn btn-list btn-outline-danger ">Delete</button>
+
+                  </div>
                 </div>
               </div>
-            </div>
+              <div className="divider"></div>
+            </>
           );
         })}
 
