@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import axios from 'axios';
 
 
 function App() {
@@ -7,6 +8,23 @@ function App() {
   const [countryName, setCountryName] = useState('');
   const [cityName, setCityName] = useState('');
   const [date, setDate] = useState('');
+  const [countryList, setCountryList] = useState([]);
+
+
+  useEffect(() => {
+    axios.get('http://localhost:3001/read').then((response) => {
+      setCountryList(response.data);
+    });
+  }, []);
+
+
+  const addToList = () => {
+    axios.post('http://localhost:3001/insert', {
+      countryName: countryName,
+      cityName: cityName,
+      date: date,
+    });
+  };
 
   return (
     <div className="App">
@@ -50,8 +68,31 @@ function App() {
               setDate(event.target.value);
             }} />
         </div>
-        <button type="button" className="btn btn-outline-success">Add Location</button>
+        <button type="button" className="btn btn-outline-success" onClick={addToList}>Add Location</button>
       </div >
+      <div className="list-wrp">
+
+        <h1 className="list-title text-primary">Countries List</h1>
+
+        {countryList.map((value, key) => {
+          return (
+            <div class="container item-wrp">
+              <div class="row">
+                <div class="col">
+                  {value.countryName}
+                </div>
+                <div class="col">
+                  {value.cityName}
+                </div>
+                <div class="col">
+                  {value.visitedDate.slice(0, 10)}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+
+      </div>
     </div >
   );
 }
