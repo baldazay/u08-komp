@@ -41,6 +41,7 @@ app.get("/read", async (req, res) => {
     })
 });
 
+
 app.put("/update", async (req, res) => {
 
     const newCountryName = req.body.newCountryName;
@@ -56,6 +57,24 @@ app.put("/update", async (req, res) => {
         console.log(err);
     };
 });
+
+
+/* app.delete("/delete/:id", async (req, res) => {
+    const id = req.params.id;
+
+    await CountryModel.findByIdAndDelete(id).exec();
+    res.send("deleted");
+}); */
+
+app.delete("/delete/:id", async (req, res) => {
+    const id = req.params.id;
+    try {
+        await CountryModel.findByIdAndDelete(id).exec();
+        res.send("deleted");
+    } catch (err) {
+        console.log(err);
+    }
+})
 
 
 app.listen(3001, () => {

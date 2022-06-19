@@ -35,14 +35,19 @@ body {
   margin: 10px 0 0 0;
 }
 
-.col p {
+.col-2 p,
+.col-4 p {
   font-size: 20px;
   align-items: center;
   margin: 0;
 }
 
+.col-4 {
+  display: flex;
+}
+
 .new-input {
-  width: 100px;
+  width: 200px;
 }
 
 .btn-list {
@@ -55,4 +60,10 @@ body {
   width: 100%;
   background-color: rgb(182, 182, 198);
   margin: 8px 50px;
+}
+
+
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .row {}
 }

@@ -34,6 +34,10 @@ function App() {
     })
   }
 
+  const deleteCountry = (id) => {
+    axios.delete(`http://localhost:3001/delete/{id}`)
+  }
+
   return (
     <div className="App">
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -88,16 +92,16 @@ function App() {
             <>
               <div className="container item-wrp">
                 <div className="row">
-                  <div className="col">
+                  <div className="col-2">
                     <p>{value.countryName}</p>
                   </div>
-                  <div className="col">
+                  <div className="col-2">
                     <p>{value.cityName}</p>
                   </div>
-                  <div className="col">
+                  <div className="col-2">
                     <p>{value.visitedDate.slice(0, 10)}</p>
                   </div>
-                  <div className="col">
+                  <div className="col-4">
                     <input type="text"
                       className="form-control new-input"
                       placeholder="Change country"
@@ -108,9 +112,9 @@ function App() {
                     </input>
                     <button type="button" className="btn btn-list btn-outline-primary" onClick={() => updateCountry(value._id)}>Update</button>
                   </div>
-                  <div className="col">
+                  <div className="col-2">
 
-                    <button type="button" className="btn btn-list btn-outline-danger ">Delete</button>
+                    <button type="button" className="btn btn-list btn-outline-danger" onClick={() => deleteCountry(value._id)}>Delete</button>
 
                   </div>
                 </div>
