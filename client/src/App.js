@@ -13,10 +13,15 @@ function App() {
 
 
   useEffect(() => {
+    readCountry();
+  }, []);
+
+
+  const readCountry = () => {
     axios.get('http://localhost:3001/read').then((response) => {
       setCountryList(response.data);
     });
-  }, []);
+  }
 
 
   const addToList = () => {
@@ -24,6 +29,8 @@ function App() {
       countryName: countryName,
       cityName: cityName,
       date: date,
+    }).then((response) => {
+      readCountry();
     });
   };
 
@@ -31,11 +38,15 @@ function App() {
     axios.put('http://localhost:3001/update', {
       id: id,
       newCountryName: newCountryName,
-    })
+    }).then((response) => {
+      readCountry();
+    });
   }
 
   const deleteCountry = (id) => {
-    axios.delete(`http://localhost:3001/delete/{id}`)
+    axios.delete(`http://localhost:3001/delete/${id}`).then((response) => {
+      readCountry();
+    });
   }
 
   return (
@@ -80,7 +91,7 @@ function App() {
               setDate(event.target.value);
             }} />
         </div>
-        <button type="button" className="btn btn-outline-success" onClick={addToList}>Add Location</button>
+        <button type="submit" className="btn btn-outline-success" onClick={addToList}>Add Location</button>
       </div >
       <div className="list-wrp">
 
